@@ -1,3 +1,10 @@
+# [1.1.0-beta.3](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.2...v1.1.0-beta.3) (2026-01-02)
+
+
+### Bug Fixes
+
+* **docker:** include README.md in build ([537596f](https://github.com/n24q02m/better-mem0-mcp/commit/537596f4031164fb6c9267a6e87adff1f2737f36))
+
 # [1.1.0-beta.2](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.1...v1.1.0-beta.2) (2026-01-02)
 
 
