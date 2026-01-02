@@ -106,6 +106,12 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
@@ -120,18 +126,13 @@ jobs:
           BRANCH=${{ github.ref_name }}
 
           if [ "$BRANCH" = "main" ]; then
-            echo "tags=${{ env.DOCKER_IMAGE }}:$VERSION,${{ env.DOCKER_IMAGE }}:latest" >> $GITHUB_OUTPUT
+            DOCKERHUB_TAGS="n24q02m/better-mem0-mcp:$VERSION,n24q02m/better-mem0-mcp:latest"
+            GHCR_TAGS="${{ env.DOCKER_IMAGE }}:$VERSION,${{ env.DOCKER_IMAGE }}:latest"
           else
-            echo "tags=${{ env.DOCKER_IMAGE }}:$VERSION,${{ env.DOCKER_IMAGE }}:beta" >> $GITHUB_OUTPUT
+            DOCKERHUB_TAGS="n24q02m/better-mem0-mcp:$VERSION,n24q02m/better-mem0-mcp:beta"
+            GHCR_TAGS="${{ env.DOCKER_IMAGE }}:$VERSION,${{ env.DOCKER_IMAGE }}:beta"
           fi
-
-      - name: Debug - List files
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "Files in directory:"
-          ls -la
-          echo "Checking README.md exists:"
-          [ -f README.md ] && echo "README.md found!" || echo "README.md NOT found!"
+          echo "tags=$DOCKERHUB_TAGS,$GHCR_TAGS" >> $GITHUB_OUTPUT
 
       - name: Build and push
         uses: docker/build-push-action@v6
