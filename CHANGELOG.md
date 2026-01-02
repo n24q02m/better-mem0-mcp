@@ -1,3 +1,10 @@
+# [1.1.0-beta.5](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.4...v1.1.0-beta.5) (2026-01-02)
+
+
+### Bug Fixes
+
+* **cd:** disable Docker GHA cache to fix stale context ([5b1c7dc](https://github.com/n24q02m/better-mem0-mcp/commit/5b1c7dcff101b2fd5a052be8933db10031a615cc))
+
 # [1.1.0-beta.4](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.3...v1.1.0-beta.4) (2026-01-02)
 
 
