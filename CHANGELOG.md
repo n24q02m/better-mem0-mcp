@@ -1,3 +1,10 @@
+# [1.1.0-beta.1](https://github.com/n24q02m/better-mem0-mcp/compare/v1.0.0...v1.1.0-beta.1) (2026-01-02)
+
+
+### Features
+
+* initial release with AI memory capabilities ([1dfecac](https://github.com/n24q02m/better-mem0-mcp/commit/1dfecacd84c3c0b0f25c3f2641d1d5c93f319ee6))
+
 # 1.0.0 (2026-01-02)
 
 
