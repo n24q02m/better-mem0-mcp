@@ -1,3 +1,10 @@
+# [1.1.0-beta.4](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.3...v1.1.0-beta.4) (2026-01-02)
+
+
+### Bug Fixes
+
+* **cd:** checkout release tag for Docker build ([9f6cb29](https://github.com/n24q02m/better-mem0-mcp/commit/9f6cb29555341d6a96a538d5651a71e61d48ed45))
+
 # [1.1.0-beta.3](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.2...v1.1.0-beta.3) (2026-01-02)
 
 
