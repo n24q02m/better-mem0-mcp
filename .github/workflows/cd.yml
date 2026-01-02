@@ -125,10 +125,19 @@ jobs:
             echo "tags=${{ env.DOCKER_IMAGE }}:$VERSION,${{ env.DOCKER_IMAGE }}:beta" >> $GITHUB_OUTPUT
           fi
 
+      - name: Debug - List files
+        run: |
+          echo "Current directory: $(pwd)"
+          echo "Files in directory:"
+          ls -la
+          echo "Checking README.md exists:"
+          [ -f README.md ] && echo "README.md found!" || echo "README.md NOT found!"
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
+          file: ./Dockerfile
           push: true
           tags: ${{ steps.tags.outputs.tags }}
 
