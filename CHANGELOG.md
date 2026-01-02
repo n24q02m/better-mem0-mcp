@@ -1,3 +1,10 @@
+# [1.1.0-beta.6](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.5...v1.1.0-beta.6) (2026-01-02)
+
+
+### Bug Fixes
+
+* **cd:** add debug step and explicit Dockerfile path ([8ed58c5](https://github.com/n24q02m/better-mem0-mcp/commit/8ed58c58d089fb135fe349d4ceedf1adcca469b5))
+
 # [1.1.0-beta.5](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.4...v1.1.0-beta.5) (2026-01-02)
 
 
