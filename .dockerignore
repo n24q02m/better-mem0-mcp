@@ -32,7 +32,9 @@ docker-compose*.yml
 .dockerignore
 
 # Misc
-*.md
+CHANGELOG.md
+CONTRIBUTING.md
+SECURITY.md
 *.log
 .env*
 .pre-commit-config.yaml
