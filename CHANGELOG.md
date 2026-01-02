@@ -1,3 +1,10 @@
+# [1.1.0-beta.2](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.1...v1.1.0-beta.2) (2026-01-02)
+
+
+### Bug Fixes
+
+* **cd:** capture semantic-release outputs for conditional jobs ([9d6d099](https://github.com/n24q02m/better-mem0-mcp/commit/9d6d0991143d9695dd7140e84c79b830b3ffea00))
+
 # [1.1.0-beta.1](https://github.com/n24q02m/better-mem0-mcp/compare/v1.0.0...v1.1.0-beta.1) (2026-01-02)
 
 
