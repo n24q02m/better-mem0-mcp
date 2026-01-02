@@ -1,3 +1,10 @@
+# [1.1.0-beta.9](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.8...v1.1.0-beta.9) (2026-01-02)
+
+
+### Features
+
+* **cd:** add Docker Hub publishing alongside GHCR ([5efb2ef](https://github.com/n24q02m/better-mem0-mcp/commit/5efb2efadbe92e651ef442f869b7d042f1fc9402))
+
 # [1.1.0-beta.8](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.7...v1.1.0-beta.8) (2026-01-02)
 
 
