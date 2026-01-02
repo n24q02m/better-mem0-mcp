@@ -71,14 +71,14 @@ jobs:
   publish-pypi:
     name: Publish to PyPI
     needs: release
-    if: needs.release.outputs.released == 'true' && github.ref == 'refs/heads/main'
+    if: needs.release.outputs.released == 'true'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: v${{ needs.release.outputs.version }}
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
