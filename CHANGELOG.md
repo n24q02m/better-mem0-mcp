@@ -1,3 +1,10 @@
+# [1.1.0-beta.8](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.7...v1.1.0-beta.8) (2026-01-02)
+
+
+### Bug Fixes
+
+* **cd:** publish PyPI on both dev (beta) and main (stable) ([abff578](https://github.com/n24q02m/better-mem0-mcp/commit/abff5788e268f8effca5871f56ce8c1b4286cb9f))
+
 # [1.1.0-beta.7](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.6...v1.1.0-beta.7) (2026-01-02)
 
 
