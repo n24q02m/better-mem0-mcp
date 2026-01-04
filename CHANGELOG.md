@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/n24q02m/better-mem0-mcp/compare/v1.0.0...v1.0.1) (2026-01-04)
+
+
+### Bug Fixes
+
+* **cd:** improve merge conflict auto-resolution in promote workflow ([ebce896](https://github.com/n24q02m/better-mem0-mcp/commit/ebce896872ea182b508cc5e6b4c62b593eabdab8))
+
 # 1.0.0 (2026-01-02)
 
 
