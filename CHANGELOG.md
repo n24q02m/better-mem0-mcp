@@ -1,3 +1,10 @@
+# [1.1.0-beta.12](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.11...v1.1.0-beta.12) (2026-01-04)
+
+
+### Bug Fixes
+
+* **cd:** add cd.yml to auto-resolve files list ([bd17665](https://github.com/n24q02m/better-mem0-mcp/commit/bd17665206305a4a5ac0c7641796db50cdb40776))
+
 # [1.1.0-beta.11](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.10...v1.1.0-beta.11) (2026-01-04)
 
 
