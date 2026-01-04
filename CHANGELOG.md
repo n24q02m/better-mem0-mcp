@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0...v1.1.1) (2026-01-04)
+
+
+### Bug Fixes
+
+* add comprehensive CD workflow for semantic release, PyPI publishing, and Docker image builds, and update project version. ([1c393c6](https://github.com/n24q02m/better-mem0-mcp/commit/1c393c644756eb96e33c3e7208a6aa10054fd2f6))
+* **cd:** use GH_PAT to enable workflow trigger on mainUsing GITHUB_TOKEN prevents push from triggering other workflows.Using GH_PAT allows promote-to-stable to trigger CD on main branch,which then runs semantic-release to create stable releases. ([66f703d](https://github.com/n24q02m/better-mem0-mcp/commit/66f703de163934222beca65524fcb4b61e0ea2c6))
+* **ci:** verify CD workflow with beta and stable releases ([19e3150](https://github.com/n24q02m/better-mem0-mcp/commit/19e3150f903608cb57906b3f15af92df7bb29303))
+
 # [1.1.0-beta.15](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.14...v1.1.0-beta.15) (2026-01-04)
 
 
