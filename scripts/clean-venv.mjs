@@ -101,12 +101,12 @@ if (wasRemoved) {
             "If you experience issues, close VSCode and run 'mise run setup' again."
         );
     } else {
-        console.error(
-            "Error: .venv exists but is not usable, and we cannot remove it."
+        console.warn(
+            "Warning: .venv exists but is not usable, and we cannot remove it."
         );
-        console.error(
-            "Please close VSCode and any terminals using the venv, then try again."
+        console.warn(
+            "Skipping venv setup. Please close VSCode and run 'mise run setup' again if needed."
         );
-        process.exit(1);
+        // Don't fail the entire setup, just warn and continue
     }
 }
