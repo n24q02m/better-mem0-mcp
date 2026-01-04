@@ -1,3 +1,10 @@
+# [1.1.0-beta.14](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.13...v1.1.0-beta.14) (2026-01-04)
+
+
+### Bug Fixes
+
+* add comprehensive CD workflow for semantic release, PyPI publishing, and Docker image builds, and update project version. ([1c393c6](https://github.com/n24q02m/better-mem0-mcp/commit/1c393c644756eb96e33c3e7208a6aa10054fd2f6))
+
 # [1.1.0-beta.13](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.12...v1.1.0-beta.13) (2026-01-04)
 
 
