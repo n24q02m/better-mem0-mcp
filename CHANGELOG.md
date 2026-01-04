@@ -1,3 +1,10 @@
+# [1.1.0-beta.11](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.10...v1.1.0-beta.11) (2026-01-04)
+
+
+### Bug Fixes
+
+* **setup:** don't fail when venv is locked but unusable ([ba0eae4](https://github.com/n24q02m/better-mem0-mcp/commit/ba0eae47530a26a79adb01292f2082224a89e870))
+
 # [1.1.0-beta.10](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.9...v1.1.0-beta.10) (2026-01-04)
 
 
