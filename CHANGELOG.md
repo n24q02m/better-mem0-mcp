@@ -1,3 +1,10 @@
+# [1.1.0-beta.10](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.9...v1.1.0-beta.10) (2026-01-04)
+
+
+### Features
+
+* **cd:** add shared scripts for promote workflow ([57a930a](https://github.com/n24q02m/better-mem0-mcp/commit/57a930a6e0021b8c7ff0c3b94a2f8d7b63cb18a0))
+
 # [1.1.0-beta.9](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.8...v1.1.0-beta.9) (2026-01-02)
 
 
