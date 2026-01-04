@@ -1,3 +1,10 @@
+# [1.1.0-beta.13](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.12...v1.1.0-beta.13) (2026-01-04)
+
+
+### Bug Fixes
+
+* **cd:** use GH_PAT to enable workflow trigger on mainUsing GITHUB_TOKEN prevents push from triggering other workflows.Using GH_PAT allows promote-to-stable to trigger CD on main branch,which then runs semantic-release to create stable releases. ([66f703d](https://github.com/n24q02m/better-mem0-mcp/commit/66f703de163934222beca65524fcb4b61e0ea2c6))
+
 # [1.1.0-beta.12](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.11...v1.1.0-beta.12) (2026-01-04)
 
 
