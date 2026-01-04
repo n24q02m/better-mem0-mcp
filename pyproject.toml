@@ -1,6 +1,6 @@
 [project]
 name = "better-mem0-mcp"
-version = "1.1.0"
+version = "1.1.0-beta.14"
 description = "Zero-setup MCP Server for AI memory - works with Neon/Supabase"
 readme = "README.md"
 license = { text = "MIT" }
@@ -71,4 +71,3 @@ python_files = ["test_*.py"]
 # - possibly-missing-attribute: Runtime-checked attributes
 # - invalid-assignment: Dynamic dict type inference issues
 rules = { unresolved-import = "ignore", unresolved-attribute = "ignore", possibly-missing-attribute = "ignore", invalid-assignment = "ignore" }
-

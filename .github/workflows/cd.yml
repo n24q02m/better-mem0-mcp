@@ -135,6 +135,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GH_PAT }}
 
       - name: Check CI/CD status on dev branch
         env:
@@ -149,4 +150,3 @@ jobs:
         run: |
           chmod +x .github/scripts/merge-with-auto-resolve.sh
           ./.github/scripts/merge-with-auto-resolve.sh --source=dev --target=main --files="$AUTO_RESOLVE_FILES"
-
