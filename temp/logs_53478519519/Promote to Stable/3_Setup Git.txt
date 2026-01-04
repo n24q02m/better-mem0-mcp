@@ -1,7 +1,0 @@
-﻿2026-01-04T06:24:50.3438022Z ##[group]Run git config user.name "github-actions[bot]"
-2026-01-04T06:24:50.3439033Z [36;1mgit config user.name "github-actions[bot]"[0m
-2026-01-04T06:24:50.3439899Z [36;1mgit config user.email "github-actions[bot]@users.noreply.github.com"[0m
-2026-01-04T06:24:50.3464166Z shell: /usr/bin/bash -e {0}
-2026-01-04T06:24:50.3464852Z env:
-2026-01-04T06:24:50.3465358Z   DOCKER_IMAGE: ghcr.io/n24q02m/better-mem0-mcp
-2026-01-04T06:24:50.3466047Z ##[endgroup]
