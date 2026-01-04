@@ -1,0 +1,91 @@
+﻿2026-01-04T06:24:49.5619505Z ##[group]Run actions/checkout@v4
+2026-01-04T06:24:49.5620331Z with:
+2026-01-04T06:24:49.5620751Z   ref: dev
+2026-01-04T06:24:49.5621196Z   fetch-depth: 0
+2026-01-04T06:24:49.5621615Z   repository: n24q02m/better-mem0-mcp
+2026-01-04T06:24:49.5622413Z   token: ***
+2026-01-04T06:24:49.5622816Z   ssh-strict: true
+2026-01-04T06:24:49.5623255Z   ssh-user: git
+2026-01-04T06:24:49.5623665Z   persist-credentials: true
+2026-01-04T06:24:49.5624154Z   clean: true
+2026-01-04T06:24:49.5624607Z   sparse-checkout-cone-mode: true
+2026-01-04T06:24:49.5625091Z   fetch-tags: false
+2026-01-04T06:24:49.5625532Z   show-progress: true
+2026-01-04T06:24:49.5625951Z   lfs: false
+2026-01-04T06:24:49.5626348Z   submodules: false
+2026-01-04T06:24:49.5626892Z   set-safe-directory: true
+2026-01-04T06:24:49.5627677Z env:
+2026-01-04T06:24:49.5628108Z   DOCKER_IMAGE: ghcr.io/n24q02m/better-mem0-mcp
+2026-01-04T06:24:49.5628669Z ##[endgroup]
+2026-01-04T06:24:49.6701019Z Syncing repository: n24q02m/better-mem0-mcp
+2026-01-04T06:24:49.6702891Z ##[group]Getting Git version info
+2026-01-04T06:24:49.6703922Z Working directory is '/home/runner/work/better-mem0-mcp/better-mem0-mcp'
+2026-01-04T06:24:49.6705018Z [command]/usr/bin/git version
+2026-01-04T06:24:49.6754747Z git version 2.52.0
+2026-01-04T06:24:49.6779130Z ##[endgroup]
+2026-01-04T06:24:49.6794167Z Temporarily overriding HOME='/home/runner/work/_temp/73c175f2-0672-4b91-8ba8-c963e2d6f1fd' before making global git config changes
+2026-01-04T06:24:49.6796447Z Adding repository directory to the temporary git global config as a safe directory
+2026-01-04T06:24:49.6809043Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/better-mem0-mcp/better-mem0-mcp
+2026-01-04T06:24:49.6844123Z Deleting the contents of '/home/runner/work/better-mem0-mcp/better-mem0-mcp'
+2026-01-04T06:24:49.6847627Z ##[group]Initializing the repository
+2026-01-04T06:24:49.6852282Z [command]/usr/bin/git init /home/runner/work/better-mem0-mcp/better-mem0-mcp
+2026-01-04T06:24:49.6946080Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-01-04T06:24:49.6947366Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-01-04T06:24:49.6948184Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-01-04T06:24:49.6949604Z hint: call:
+2026-01-04T06:24:49.6949978Z hint:
+2026-01-04T06:24:49.6950509Z hint: 	git config --global init.defaultBranch <name>
+2026-01-04T06:24:49.6951115Z hint:
+2026-01-04T06:24:49.6951625Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-01-04T06:24:49.6952466Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-01-04T06:24:49.6953105Z hint:
+2026-01-04T06:24:49.6953614Z hint: 	git branch -m <name>
+2026-01-04T06:24:49.6954071Z hint:
+2026-01-04T06:24:49.6954659Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-01-04T06:24:49.6955646Z Initialized empty Git repository in /home/runner/work/better-mem0-mcp/better-mem0-mcp/.git/
+2026-01-04T06:24:49.6960393Z [command]/usr/bin/git remote add origin https://github.com/n24q02m/better-mem0-mcp
+2026-01-04T06:24:49.6992247Z ##[endgroup]
+2026-01-04T06:24:49.6993626Z ##[group]Disabling automatic garbage collection
+2026-01-04T06:24:49.6997193Z [command]/usr/bin/git config --local gc.auto 0
+2026-01-04T06:24:49.7023644Z ##[endgroup]
+2026-01-04T06:24:49.7024729Z ##[group]Setting up auth
+2026-01-04T06:24:49.7031556Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-01-04T06:24:49.7058931Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-01-04T06:24:49.7342409Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-01-04T06:24:49.7367497Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-01-04T06:24:49.7543470Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-01-04T06:24:49.7573778Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-01-04T06:24:49.7751438Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-01-04T06:24:49.7780670Z ##[endgroup]
+2026-01-04T06:24:49.7781924Z ##[group]Fetching the repository
+2026-01-04T06:24:49.7789915Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-01-04T06:24:50.3024249Z From https://github.com/n24q02m/better-mem0-mcp
+2026-01-04T06:24:50.3025250Z  * [new branch]      dev            -> origin/dev
+2026-01-04T06:24:50.3026039Z  * [new branch]      main           -> origin/main
+2026-01-04T06:24:50.3027314Z  * [new tag]         v1.0.0         -> v1.0.0
+2026-01-04T06:24:50.3027981Z  * [new tag]         v1.0.1         -> v1.0.1
+2026-01-04T06:24:50.3028776Z  * [new tag]         v1.1.0-beta.1  -> v1.1.0-beta.1
+2026-01-04T06:24:50.3029540Z  * [new tag]         v1.1.0-beta.10 -> v1.1.0-beta.10
+2026-01-04T06:24:50.3030192Z  * [new tag]         v1.1.0-beta.11 -> v1.1.0-beta.11
+2026-01-04T06:24:50.3030914Z  * [new tag]         v1.1.0-beta.2  -> v1.1.0-beta.2
+2026-01-04T06:24:50.3031584Z  * [new tag]         v1.1.0-beta.3  -> v1.1.0-beta.3
+2026-01-04T06:24:50.3032286Z  * [new tag]         v1.1.0-beta.4  -> v1.1.0-beta.4
+2026-01-04T06:24:50.3033005Z  * [new tag]         v1.1.0-beta.5  -> v1.1.0-beta.5
+2026-01-04T06:24:50.3033670Z  * [new tag]         v1.1.0-beta.6  -> v1.1.0-beta.6
+2026-01-04T06:24:50.3034361Z  * [new tag]         v1.1.0-beta.7  -> v1.1.0-beta.7
+2026-01-04T06:24:50.3035059Z  * [new tag]         v1.1.0-beta.8  -> v1.1.0-beta.8
+2026-01-04T06:24:50.3035794Z  * [new tag]         v1.1.0-beta.9  -> v1.1.0-beta.9
+2026-01-04T06:24:50.3057374Z ##[endgroup]
+2026-01-04T06:24:50.3058298Z ##[group]Determining the checkout info
+2026-01-04T06:24:50.3062803Z [command]/usr/bin/git branch --list --remote origin/dev
+2026-01-04T06:24:50.3083795Z   origin/dev
+2026-01-04T06:24:50.3087184Z ##[endgroup]
+2026-01-04T06:24:50.3091799Z [command]/usr/bin/git sparse-checkout disable
+2026-01-04T06:24:50.3127257Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-01-04T06:24:50.3150281Z ##[group]Checking out the ref
+2026-01-04T06:24:50.3153253Z [command]/usr/bin/git checkout --progress --force -B dev refs/remotes/origin/dev
+2026-01-04T06:24:50.3213375Z Switched to a new branch 'dev'
+2026-01-04T06:24:50.3215020Z branch 'dev' set up to track 'origin/dev'.
+2026-01-04T06:24:50.3221636Z ##[endgroup]
+2026-01-04T06:24:50.3254289Z [command]/usr/bin/git log -1 --format=%H
+2026-01-04T06:24:50.3274481Z c4960904a3e0d56eddf510a61dd5aa6aa4116284
