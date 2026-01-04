@@ -1,3 +1,10 @@
+# [1.1.0-beta.15](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.14...v1.1.0-beta.15) (2026-01-04)
+
+
+### Bug Fixes
+
+* **ci:** verify CD workflow with beta and stable releases ([19e3150](https://github.com/n24q02m/better-mem0-mcp/commit/19e3150f903608cb57906b3f15af92df7bb29303))
+
 # [1.1.0-beta.14](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.13...v1.1.0-beta.14) (2026-01-04)
 
 
