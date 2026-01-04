@@ -150,4 +150,3 @@ jobs:
         run: |
           chmod +x .github/scripts/merge-with-auto-resolve.sh
           ./.github/scripts/merge-with-auto-resolve.sh --source=dev --target=main --files="$AUTO_RESOLVE_FILES"
-

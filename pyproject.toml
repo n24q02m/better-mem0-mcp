@@ -71,4 +71,3 @@ python_files = ["test_*.py"]
 # - possibly-missing-attribute: Runtime-checked attributes
 # - invalid-assignment: Dynamic dict type inference issues
 rules = { unresolved-import = "ignore", unresolved-attribute = "ignore", possibly-missing-attribute = "ignore", invalid-assignment = "ignore" }
-

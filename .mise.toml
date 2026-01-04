@@ -22,10 +22,7 @@ run = [
   "node scripts/clean-venv.mjs",
   "uv pip install pre-commit",
   "uv run pre-commit install",
-  "echo ''",
-  "echo 'Setup complete!'",
-  "echo '  -> Check: mise run check'",
-  "echo '  -> Test:  mise run test'"
+  "echo 'Setup complete!'"
 ]
 
 [tasks.check]
