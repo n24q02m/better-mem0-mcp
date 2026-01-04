@@ -21,6 +21,10 @@ permissions:
 env:
   DOCKER_IMAGE: ghcr.io/${{ github.repository }}
 
+concurrency:
+  group: cd-${{ github.repository }}
+  cancel-in-progress: false
+
 jobs:
   release:
     name: Semantic Release
@@ -34,7 +38,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -53,32 +57,19 @@ jobs:
         id: semantic
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          npx semantic-release --dry-run > release-output.txt 2>&1 || true
-          if grep -q "Published release" release-output.txt || grep -q "Release notes" release-output.txt; then
-            npx semantic-release
-            LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-            if [ -n "$LATEST_TAG" ]; then
-              echo "new_release_published=true" >> "$GITHUB_OUTPUT"
-              echo "new_release_version=${LATEST_TAG#v}" >> "$GITHUB_OUTPUT"
-            else
-              echo "new_release_published=false" >> "$GITHUB_OUTPUT"
-            fi
-          else
-            echo "new_release_published=false" >> "$GITHUB_OUTPUT"
-          fi
+        run: npx semantic-release
 
   publish-pypi:
     name: Publish to PyPI
     needs: release
-    if: needs.release.outputs.released == 'true'
+    if: needs.release.outputs.released == 'true' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: v${{ needs.release.outputs.version }}
+          ref: main
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -101,16 +92,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: v${{ needs.release.outputs.version }}
+          ref: ${{ github.ref }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Login to GHCR
         uses: docker/login-action@v3
@@ -126,21 +111,19 @@ jobs:
           BRANCH=${{ github.ref_name }}
 
           if [ "$BRANCH" = "main" ]; then
-            DOCKERHUB_TAGS="n24q02m/better-mem0-mcp:$VERSION,n24q02m/better-mem0-mcp:latest"
-            GHCR_TAGS="${{ env.DOCKER_IMAGE }}:$VERSION,${{ env.DOCKER_IMAGE }}:latest"
+            echo "tags=${{ env.DOCKER_IMAGE }}:$VERSION,${{ env.DOCKER_IMAGE }}:latest" >> $GITHUB_OUTPUT
           else
-            DOCKERHUB_TAGS="n24q02m/better-mem0-mcp:$VERSION,n24q02m/better-mem0-mcp:beta"
-            GHCR_TAGS="${{ env.DOCKER_IMAGE }}:$VERSION,${{ env.DOCKER_IMAGE }}:beta"
+            echo "tags=${{ env.DOCKER_IMAGE }}:$VERSION,${{ env.DOCKER_IMAGE }}:beta" >> $GITHUB_OUTPUT
           fi
-          echo "tags=$DOCKERHUB_TAGS,$GHCR_TAGS" >> $GITHUB_OUTPUT
 
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./Dockerfile
           push: true
           tags: ${{ steps.tags.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   promote-stable:
     name: Promote to Stable
@@ -151,16 +134,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: dev
           fetch-depth: 0
 
-      - name: Setup Git
+      - name: Check CI/CD status on dev branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          chmod +x .github/scripts/check-ci-cd-status.sh
+          ./.github/scripts/check-ci-cd-status.sh --branch=dev
 
       - name: Merge dev to main
+        env:
+          AUTO_RESOLVE_FILES: "CHANGELOG.md,package.json,pyproject.toml"
         run: |
-          git checkout main
-          git merge dev --no-edit
-          git push origin main
+          chmod +x .github/scripts/merge-with-auto-resolve.sh
+          ./.github/scripts/merge-with-auto-resolve.sh --source=dev --target=main --files="$AUTO_RESOLVE_FILES"
+
