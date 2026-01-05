@@ -18,9 +18,9 @@
 ```json
 {
   "mcpServers": {
-    "memory": {
+    "better-mem0": {
       "command": "uvx",
-      "args": ["better-mem0-mcp"],
+      "args": ["better-mem0-mcp@latest"],
       "env": {
         "DATABASE_URL": "postgresql://user:pass@xxx.neon.tech/neondb?sslmode=require",
         "API_KEYS": "gemini:AIza..."
@@ -35,7 +35,7 @@
 ```json
 {
   "mcpServers": {
-    "memory": {
+    "better-mem0": {
       "command": "docker",
       "args": ["run", "-i", "--rm", "-e", "DATABASE_URL", "-e", "API_KEYS", "n24q02m/better-mem0-mcp:latest"],
       "env": {

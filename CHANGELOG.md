@@ -1,10 +1,9 @@
-## [1.1.2](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.1...v1.1.2) (2026-01-05)
+# [1.1.0-beta.18](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.17...v1.1.0-beta.18) (2026-01-05)
 
 
 ### Bug Fixes
 
-* correct semantic-release outputs detection ([eecfeea](https://github.com/n24q02m/better-mem0-mcp/commit/eecfeea50c9d4a758f6810d5989ae4c1eaf1398a))
-* verify ci/cd workflow changes ([dfb6480](https://github.com/n24q02m/better-mem0-mcp/commit/dfb6480f13721a04606a3246947af5fd0764cc6a))
+* Add `__main__.py` entry point and update README with `better-mem0` server configuration. ([5c44f58](https://github.com/n24q02m/better-mem0-mcp/commit/5c44f58a5357c90c586009f75ddd876c45ef6f66))
 
 # [1.1.0-beta.17](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.16...v1.1.0-beta.17) (2026-01-05)
 
