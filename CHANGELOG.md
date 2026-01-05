@@ -1,9 +1,9 @@
-## [1.1.3](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.2...v1.1.3) (2026-01-05)
+# [1.1.0-beta.19](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.18...v1.1.0-beta.19) (2026-01-05)
 
 
 ### Bug Fixes
 
-* Add `__main__.py` entry point and update README with `better-mem0` server configuration. ([5c44f58](https://github.com/n24q02m/better-mem0-mcp/commit/5c44f58a5357c90c586009f75ddd876c45ef6f66))
+* correct Mem0 API response parsing for search and get_all ([8a612b1](https://github.com/n24q02m/better-mem0-mcp/commit/8a612b1443c59c229e7583ffedced6d38f1b13d1))
 
 # [1.1.0-beta.18](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.17...v1.1.0-beta.18) (2026-01-05)
 

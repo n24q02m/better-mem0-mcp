@@ -108,21 +108,24 @@ async def memory(
             if not query:
                 return "Error: 'query' required for search action"
 
-            # Vector search
-            results = _memory.search(query, user_id=user_id, limit=limit)
+            # Vector search - returns {"memories": [...]}
+            response = _memory.search(query, user_id=user_id, limit=limit)
+            memories = (
+                response.get("memories", []) if isinstance(response, dict) else response
+            )
 
             # Add graph context
             graph_context = ""
             if _graph:
                 graph_context = _graph.get_context(query, user_id)
 
-            if not results and not graph_context:
+            if not memories and not graph_context:
                 return "No memories found."
 
             output = ""
-            if results:
+            if memories:
                 output = "Memories:\n" + "\n".join(
-                    [f"- {r.get('memory', str(r))}" for r in results]
+                    [f"- {m.get('memory', str(m))}" for m in memories]
                 )
             if graph_context:
                 output += f"\n\n{graph_context}"
@@ -130,13 +133,17 @@ async def memory(
             return output
 
         elif action == "list":
-            results = _memory.get_all(user_id=user_id)
+            # get_all returns {"results": [...]} or list directly
+            response = _memory.get_all(user_id=user_id)
+            memories = (
+                response.get("results", []) if isinstance(response, dict) else response
+            )
 
-            if not results:
+            if not memories:
                 return "No memories stored."
 
-            lines = [f"- [{r['id'][:8]}] {r['memory']}" for r in results]
-            return f"Memories ({len(results)}):\n" + "\n".join(lines)
+            lines = [f"- [{m['id'][:8]}] {m['memory']}" for m in memories]
+            return f"Memories ({len(memories)}):\n" + "\n".join(lines)
 
         elif action == "delete":
             if not memory_id:
