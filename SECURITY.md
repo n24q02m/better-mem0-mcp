@@ -4,18 +4,23 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.x.x   | :white_check_mark: |
+| 1.x.x   | :white_check_mark: |
+| < 1.0   | :x:                |
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability, please report it by:
+If you discover a security vulnerability, please **DO NOT** create a public issue.
 
-1. **Do NOT** create a public GitHub issue
-2. Email the maintainer directly or use GitHub's private vulnerability reporting
-3. Include detailed steps to reproduce the issue
-4. Allow reasonable time for a fix before public disclosure
+Instead, please email: **quangminh2402.dev@gmail.com**
 
-We take security seriously and will respond promptly to valid reports.
+Include:
+
+1. Detailed description of the vulnerability
+2. Steps to reproduce
+3. Potential impact
+4. Suggested fix (if any)
+
+You will receive acknowledgment within 48 hours.
 
 ## Security Best Practices
 
