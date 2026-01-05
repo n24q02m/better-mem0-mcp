@@ -1,15 +1,27 @@
 # better-mem0-mcp
 
-**Zero-setup** MCP Server for AI memory. Works with Neon/Supabase free tier.
+**Self-hosted MCP Server for AI memory with PostgreSQL (pgvector).**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PyPI](https://img.shields.io/pypi/v/better-mem0-mcp)](https://pypi.org/project/better-mem0-mcp/)
+[![Docker](https://img.shields.io/docker/v/n24q02m/better-mem0-mcp?label=docker)](https://hub.docker.com/r/n24q02m/better-mem0-mcp)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+## Features
+
+- **Self-hosted PostgreSQL** - Your data stays with you (Neon/Supabase free tier supported)
+- **Graph Memory** - SQL-based relationship tracking alongside vector memory
+- **Multi-provider LLM** - Gemini, OpenAI, Anthropic, Groq, DeepSeek, Mistral
+- **Fallback chains** - Multi-key per provider + multi-model fallback
+- **Zero manual setup** - Just `DATABASE_URL` + `API_KEYS`
+
+---
 
 ## Quick Start
 
 ### 1. Get Prerequisites
 
-- **Database**: [Neon](https://neon.tech) or [Supabase](https://supabase.com) (free tier)
-- **API Key**: [Google AI Studio](https://aistudio.google.com/apikey) (free tier)
+- **Database**: [Neon](https://neon.tech) or [Supabase](https://supabase.com) (free tier works)
+- **API Key**: Any supported provider ([Google AI Studio](https://aistudio.google.com/apikey) is free)
 
 ### 2. Add to mcp.json
 
@@ -49,7 +61,7 @@
 
 ### 3. Done!
 
-Ask Claude: "Remember that I prefer dark mode and use FastAPI"
+Ask your AI: "Remember that I prefer dark mode and use FastAPI"
 
 ---
 
@@ -57,22 +69,26 @@ Ask Claude: "Remember that I prefer dark mode and use FastAPI"
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `DATABASE_URL` | Yes | PostgreSQL connection string |
-| `API_KEYS` | Yes | `provider:key,...` (multi-key per provider OK) |
-| `LLM_MODELS` | No | `provider/model,...` (fallback chain) |
-| `EMBEDDER_MODELS` | No | `provider/model,...` (fallback chain) |
+| `DATABASE_URL` | Yes | PostgreSQL with pgvector extension |
+| `API_KEYS` | Yes | `provider:key` pairs, comma-separated |
+| `LLM_MODELS` | No | Model fallback chain |
+| `EMBEDDER_MODELS` | No | Embedding model chain |
+
+### Supported Providers
+
+`gemini`, `openai`, `anthropic`, `groq`, `deepseek`, `mistral`
 
 ### Examples
 
-**Minimal (Gemini only):**
-```
+**Single provider:**
+```bash
 API_KEYS=gemini:AIza...
 ```
 
 **Multi-key with fallback:**
-```
+```bash
 API_KEYS=gemini:AIza-1,gemini:AIza-2,openai:sk-xxx
-LLM_MODELS=gemini/gemini-2.5-flash,openai/gpt-4o-mini
+LLM_MODELS=gemini/gemini-3-flash-preview,openai/gpt-4o-mini
 EMBEDDER_MODELS=gemini/gemini-embedding-001,openai/text-embedding-3-small
 ```
 
@@ -80,7 +96,7 @@ EMBEDDER_MODELS=gemini/gemini-embedding-001,openai/text-embedding-3-small
 
 | Setting | Default |
 |---------|---------|
-| `LLM_MODELS` | `gemini/gemini-2.5-flash` |
+| `LLM_MODELS` | `gemini/gemini-3-flash-preview` |
 | `EMBEDDER_MODELS` | `gemini/gemini-embedding-001` |
 
 ---
@@ -89,32 +105,41 @@ EMBEDDER_MODELS=gemini/gemini-embedding-001,openai/text-embedding-3-small
 
 | Tool | Description |
 |------|-------------|
-| `memory` | `action`: add, search, list, delete |
-| `help` | Detailed documentation |
+| `memory` | Memory operations: `add`, `search`, `list`, `delete` |
+| `help` | Get full documentation for tools |
 
-### Usage
+### Usage Examples
 
 ```json
 {"action": "add", "content": "I prefer TypeScript over JavaScript"}
-{"action": "search", "query": "preferences"}
+{"action": "search", "query": "programming preferences"}
 {"action": "list"}
 {"action": "delete", "memory_id": "abc123"}
 ```
 
 ---
 
-## Why better-mem0-mcp?
+## Build from Source
 
-| Feature | Official mem0-mcp | better-mem0-mcp |
-|---------|-------------------|-----------------|
-| Storage | Mem0 Cloud | **Self-hosted PostgreSQL** |
-| Graph Memory | No | **Yes (SQL-based)** |
-| LLM Provider | OpenAI only | **Any (Gemini/OpenAI/Ollama/...)** |
-| Fallback | No | **Yes (multi-key + multi-model)** |
-| Setup | API Key | **DATABASE_URL + API_KEYS** |
+```bash
+git clone https://github.com/n24q02m/better-mem0-mcp
+cd better-mem0-mcp
+
+# Setup (requires mise: https://mise.jdx.dev/)
+mise run setup
+
+# Run
+uv run better-mem0-mcp
+```
+
+**Requirements:** Python 3.13+
 
 ---
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
 ## License
 
-MIT
+MIT - See [LICENSE](LICENSE)

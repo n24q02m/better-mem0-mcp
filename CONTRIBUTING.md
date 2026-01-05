@@ -84,6 +84,8 @@ We use [Conventional Commits](https://www.conventionalcommits.org/):
 - `perf`: Performance improvements
 - `test`: Adding or updating tests
 - `chore`: Maintenance tasks
+- `ci`: CI/CD changes
+- `build`: Build system changes
 
 ### Examples
 
@@ -92,6 +94,44 @@ feat: add support for Anthropic API
 fix: handle database connection timeout
 docs: update configuration examples
 ```
+
+## Release Process
+
+Releases are automated using **Semantic Release**. We strictly follow the **Conventional Commits** specification to determine version bumps and generate changelogs automatically.
+
+### How to Release
+
+1. Create a Pull Request with your changes.
+2. Ensure your commit messages follow the convention above.
+3. Merge the PR to `main`.
+4. The CI pipeline will automatically:
+   - Analyze the new commits
+   - Determine the next version number
+   - Generate release notes
+   - Update `CHANGELOG.md`
+   - Publish to PyPI
+   - Create a GitHub Release
+   - Build and push Docker images
+
+You do **not** need to create manual tags or changelog entries.
+
+## Pull Request Guidelines
+
+- Keep PRs focused on a single feature or fix
+- Update documentation if needed
+- Add tests for new functionality
+- Ensure all checks pass
+
+### PR Checklist
+
+Before submitting your PR, ensure:
+
+- [ ] Code follows Python best practices
+- [ ] All tests pass (`uv run pytest`)
+- [ ] Linting passes (`uv run ruff check .`)
+- [ ] Formatting is correct (`uv run ruff format --check .`)
+- [ ] Commit messages follow **Conventional Commits**
+- [ ] Documentation updated (if needed)
 
 ## Code Style
 
@@ -125,6 +165,15 @@ better-mem0-mcp/
 ├── pyproject.toml
 └── README.md
 ```
+
+## Questions?
+
+Feel free to open an issue for:
+
+- Bug reports
+- Feature requests
+- Questions about the codebase
+- Discussion about architecture
 
 ## License
 
