@@ -2,11 +2,11 @@ name: CD
 
 on:
   push:
-    branches: [main, dev]
+    branches: [dev, main]
   workflow_dispatch:
     inputs:
       action:
-        description: "Action to perform"
+        description: "Select action"
         required: true
         default: "promote-to-stable"
         type: choice
@@ -19,120 +19,22 @@ permissions:
   id-token: write
 
 env:
-  DOCKER_IMAGE: ghcr.io/${{ github.repository }}
+  DOCKERHUB_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/better-mem0-mcp
+  GHCR_IMAGE: ghcr.io/${{ github.repository }}
 
 concurrency:
   group: cd-${{ github.repository }}
   cancel-in-progress: false
 
 jobs:
-  release:
-    name: Semantic Release
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push'
-    outputs:
-      released: ${{ steps.semantic.outputs.new_release_published }}
-      version: ${{ steps.semantic.outputs.new_release_version }}
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-
-      - name: Install uv (for toml-cli)
-        uses: astral-sh/setup-uv@v5
-        with:
-          version: "latest"
-
-      - name: Install semantic-release
-        run: npm install -g semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/exec
-
-      - name: Run semantic-release
-        id: semantic
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
-
-  publish-pypi:
-    name: Publish to PyPI
-    needs: release
-    if: needs.release.outputs.released == 'true' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: main
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-
-      - name: Build package
-        run: uv build
-
-      - name: Publish to PyPI
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        run: uv publish
-
-  publish-docker:
-    name: Build & Push Docker Image
-    needs: release
-    if: needs.release.outputs.released == 'true'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Determine tags
-        id: tags
-        run: |
-          VERSION=${{ needs.release.outputs.version }}
-          BRANCH=${{ github.ref_name }}
-
-          if [ "$BRANCH" = "main" ]; then
-            echo "tags=${{ env.DOCKER_IMAGE }}:$VERSION,${{ env.DOCKER_IMAGE }}:latest" >> $GITHUB_OUTPUT
-          else
-            echo "tags=${{ env.DOCKER_IMAGE }}:$VERSION,${{ env.DOCKER_IMAGE }}:beta" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.tags.outputs.tags }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-  promote-stable:
+  promote:
     name: Promote to Stable
     if: github.event_name == 'workflow_dispatch' && inputs.action == 'promote-to-stable'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_PAT }}
@@ -146,7 +48,250 @@ jobs:
 
       - name: Merge dev to main
         env:
-          AUTO_RESOLVE_FILES: "CHANGELOG.md,package.json,pyproject.toml,.github/workflows/cd.yml"
+          AUTO_RESOLVE_FILES: "CHANGELOG.md,pyproject.toml"
         run: |
           chmod +x .github/scripts/merge-with-auto-resolve.sh
           ./.github/scripts/merge-with-auto-resolve.sh --source=dev --target=main --files="$AUTO_RESOLVE_FILES"
+
+  release:
+    name: Semantic Release
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    outputs:
+      released: ${{ steps.check.outputs.released }}
+      version: ${{ steps.check.outputs.version }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - name: Install uv (for toml-cli)
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+
+      - name: Install semantic-release
+        run: npm install -g semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/exec
+
+      - name: Run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
+
+      - name: Check release status
+        id: check
+        run: |
+          git fetch --tags
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          CURRENT_COMMIT=$(git rev-parse HEAD)
+          TAG_COMMIT=$(git rev-list -n 1 "$LATEST_TAG" 2>/dev/null || echo "")
+
+          if [ -n "$LATEST_TAG" ] && [ "$CURRENT_COMMIT" = "$TAG_COMMIT" ]; then
+            echo "released=true" >> $GITHUB_OUTPUT
+            echo "version=${LATEST_TAG#v}" >> $GITHUB_OUTPUT
+            echo "New release detected: $LATEST_TAG"
+          else
+            echo "released=false" >> $GITHUB_OUTPUT
+            echo "No new release"
+          fi
+
+  publish-pypi:
+    name: Publish to PyPI
+    needs: release
+    if: needs.release.outputs.released == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Build package
+        run: uv build
+
+      - name: Publish to PyPI
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: uv publish
+
+  build-docker:
+    name: Build Docker (${{ matrix.platform }})
+    needs: release
+    if: needs.release.outputs.released == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux/amd64
+            runner: ubuntu-latest
+            artifact: linux-amd64
+          - platform: linux/arm64
+            runner: ubuntu-24.04-arm
+            artifact: linux-arm64
+    runs-on: ${{ matrix.runner }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push by digest
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: ${{ matrix.platform }}
+          outputs: type=image,"name=${{ env.DOCKERHUB_IMAGE }},${{ env.GHCR_IMAGE }}",push-by-digest=true,name-canonical=true,push=true
+          cache-from: type=gha,scope=${{ github.ref_name }}-${{ matrix.artifact }}
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.artifact }}
+
+      - name: Export digest
+        run: |
+          echo "Digest: ${{ steps.build.outputs.digest }}"
+          if [ -z "${{ steps.build.outputs.digest }}" ]; then
+            echo "Error: Digest is empty!"
+            exit 1
+          fi
+          mkdir -p ${{ runner.temp }}/digests
+          echo "${{ steps.build.outputs.digest }}" | sed 's/^sha256://' | xargs -I{} touch "${{ runner.temp }}/digests/{}"
+
+      - name: Upload digest
+        uses: actions/upload-artifact@v4
+        with:
+          name: digests-${{ matrix.artifact }}
+          path: ${{ runner.temp }}/digests/*
+          retention-days: 1
+
+  merge-docker:
+    name: Merge Docker Manifests
+    needs: [release, build-docker]
+    if: needs.release.outputs.released == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download digests
+        uses: actions/download-artifact@v4
+        with:
+          path: ${{ runner.temp }}/digests
+          pattern: digests-*
+          merge-multiple: true
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create and push manifest (stable)
+        if: github.ref == 'refs/heads/main'
+        working-directory: ${{ runner.temp }}/digests
+        env:
+          VERSION: ${{ needs.release.outputs.version }}
+        run: |
+          MAJOR_MINOR=$(echo "$VERSION" | cut -d. -f1,2)
+          MAJOR=$(echo "$VERSION" | cut -d. -f1)
+
+          # Prepare sources
+          SOURCES_DOCKERHUB=""
+          SOURCES_GHCR=""
+          for digest in *; do
+            SOURCES_DOCKERHUB="$SOURCES_DOCKERHUB ${{ env.DOCKERHUB_IMAGE }}@sha256:$digest"
+            SOURCES_GHCR="$SOURCES_GHCR ${{ env.GHCR_IMAGE }}@sha256:$digest"
+          done
+
+          # Create manifests for Docker Hub
+          docker buildx imagetools create \
+            -t ${{ env.DOCKERHUB_IMAGE }}:latest \
+            -t ${{ env.DOCKERHUB_IMAGE }}:$VERSION \
+            -t ${{ env.DOCKERHUB_IMAGE }}:$MAJOR_MINOR \
+            -t ${{ env.DOCKERHUB_IMAGE }}:$MAJOR \
+            $SOURCES_DOCKERHUB
+
+          # Create manifests for GHCR
+          docker buildx imagetools create \
+            -t ${{ env.GHCR_IMAGE }}:latest \
+            -t ${{ env.GHCR_IMAGE }}:$VERSION \
+            -t ${{ env.GHCR_IMAGE }}:$MAJOR_MINOR \
+            -t ${{ env.GHCR_IMAGE }}:$MAJOR \
+            $SOURCES_GHCR
+
+      - name: Create and push manifest (beta)
+        if: github.ref == 'refs/heads/dev'
+        working-directory: ${{ runner.temp }}/digests
+        env:
+          VERSION: ${{ needs.release.outputs.version }}
+        run: |
+          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+
+          # Prepare sources
+          SOURCES_DOCKERHUB=""
+          SOURCES_GHCR=""
+          for digest in *; do
+            SOURCES_DOCKERHUB="$SOURCES_DOCKERHUB ${{ env.DOCKERHUB_IMAGE }}@sha256:$digest"
+            SOURCES_GHCR="$SOURCES_GHCR ${{ env.GHCR_IMAGE }}@sha256:$digest"
+          done
+
+          # Create manifests for Docker Hub
+          docker buildx imagetools create \
+            -t ${{ env.DOCKERHUB_IMAGE }}:beta \
+            -t ${{ env.DOCKERHUB_IMAGE }}:$VERSION \
+            -t ${{ env.DOCKERHUB_IMAGE }}:beta-$SHORT_SHA \
+            $SOURCES_DOCKERHUB
+
+          # Create manifests for GHCR
+          docker buildx imagetools create \
+            -t ${{ env.GHCR_IMAGE }}:beta \
+            -t ${{ env.GHCR_IMAGE }}:$VERSION \
+            -t ${{ env.GHCR_IMAGE }}:beta-$SHORT_SHA \
+            $SOURCES_GHCR
+
+      - name: Checkout code
+        if: github.ref == 'refs/heads/main'
+        uses: actions/checkout@v6
+
+      - name: Update Docker Hub Description
+        if: github.ref == 'refs/heads/main'
+        uses: peter-evans/dockerhub-description@v5
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: ${{ secrets.DOCKERHUB_USERNAME }}/better-mem0-mcp
+          short-description: ${{ github.event.repository.description }}
+          readme-filepath: ./README.md
