@@ -1,9 +1,9 @@
-## [1.1.4](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.3...v1.1.4) (2026-01-05)
+# [1.1.0-beta.20](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.19...v1.1.0-beta.20) (2026-01-05)
 
 
 ### Bug Fixes
 
-* correct Mem0 API response parsing for search and get_all ([8a612b1](https://github.com/n24q02m/better-mem0-mcp/commit/8a612b1443c59c229e7583ffedced6d38f1b13d1))
+* correct search response parsing and improve documentation ([d4d4753](https://github.com/n24q02m/better-mem0-mcp/commit/d4d4753a7d0d3c8eb23ef15c051a7bcb1b000310))
 
 # [1.1.0-beta.19](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.18...v1.1.0-beta.19) (2026-01-05)
 
