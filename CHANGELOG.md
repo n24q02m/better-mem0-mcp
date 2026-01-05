@@ -1,3 +1,10 @@
+# [1.1.0-beta.17](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.16...v1.1.0-beta.17) (2026-01-05)
+
+
+### Bug Fixes
+
+* correct semantic-release outputs detection ([eecfeea](https://github.com/n24q02m/better-mem0-mcp/commit/eecfeea50c9d4a758f6810d5989ae4c1eaf1398a))
+
 # [1.1.0-beta.16](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.15...v1.1.0-beta.16) (2026-01-05)
 
 
