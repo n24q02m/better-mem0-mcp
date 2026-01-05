@@ -50,3 +50,4 @@ htmlcov/
 
 # Build artifacts
 *.whl
+node_modules/
