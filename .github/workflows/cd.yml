@@ -58,14 +58,15 @@ jobs:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     outputs:
-      released: ${{ steps.semantic.outputs.new_release_published }}
-      version: ${{ steps.semantic.outputs.new_release_version }}
+      released: ${{ steps.check.outputs.released }}
+      version: ${{ steps.check.outputs.version }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
-          persist-credentials: false
+          fetch-depth: 0
+          token: ${{ secrets.GH_PAT }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -81,10 +82,26 @@ jobs:
         run: npm install -g semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/exec
 
       - name: Run semantic-release
-        id: semantic
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
+
+      - name: Check release status
+        id: check
+        run: |
+          git fetch --tags
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          CURRENT_COMMIT=$(git rev-parse HEAD)
+          TAG_COMMIT=$(git rev-list -n 1 "$LATEST_TAG" 2>/dev/null || echo "")
+
+          if [ -n "$LATEST_TAG" ] && [ "$CURRENT_COMMIT" = "$TAG_COMMIT" ]; then
+            echo "released=true" >> $GITHUB_OUTPUT
+            echo "version=${LATEST_TAG#v}" >> $GITHUB_OUTPUT
+            echo "New release detected: $LATEST_TAG"
+          else
+            echo "released=false" >> $GITHUB_OUTPUT
+            echo "No new release"
+          fi
 
   publish-pypi:
     name: Publish to PyPI
