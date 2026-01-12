@@ -1,9 +1,9 @@
-## [1.1.5](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.4...v1.1.5) (2026-01-05)
+# [1.1.0-beta.21](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.20...v1.1.0-beta.21) (2026-01-12)
 
 
 ### Bug Fixes
 
-* correct search response parsing and improve documentation ([d4d4753](https://github.com/n24q02m/better-mem0-mcp/commit/d4d4753a7d0d3c8eb23ef15c051a7bcb1b000310))
+* update Node.js version to 24 in CI/CD configuration and Mise setup ([92ab0a9](https://github.com/n24q02m/better-mem0-mcp/commit/92ab0a96cd30643b9ecf927c68b46cde6472d732))
 
 # [1.1.0-beta.20](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.19...v1.1.0-beta.20) (2026-01-05)
 
