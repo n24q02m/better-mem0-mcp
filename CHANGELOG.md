@@ -1,3 +1,10 @@
+# [1.1.0-beta.21](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.20...v1.1.0-beta.21) (2026-01-12)
+
+
+### Bug Fixes
+
+* update Node.js version to 24 in CI/CD configuration and Mise setup ([92ab0a9](https://github.com/n24q02m/better-mem0-mcp/commit/92ab0a96cd30643b9ecf927c68b46cde6472d732))
+
 # [1.1.0-beta.20](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.19...v1.1.0-beta.20) (2026-01-05)
 
 
