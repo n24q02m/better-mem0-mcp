@@ -33,43 +33,36 @@ class Settings(BaseSettings):
     embedder_models: str = "gemini/gemini-embedding-001"
 
     def setup_api_keys(self) -> dict[str, list[str]]:
-        """
-        Parse API_KEYS and set environment variables for LiteLLM.
+        """Parse API_KEYS (format: ENV_VAR:key,...) and set env vars.
+
+        Example:
+            API_KEYS="GOOGLE_API_KEY:abc,GOOGLE_API_KEY:def,OPENAI_API_KEY:xyz"
 
         Returns:
-            Dict mapping provider to list of API keys.
+            Dict mapping env var name to list of API keys.
         """
-        env_map = {
-            "gemini": "GOOGLE_API_KEY",
-            "openai": "OPENAI_API_KEY",
-            "anthropic": "ANTHROPIC_API_KEY",
-            "groq": "GROQ_API_KEY",
-            "deepseek": "DEEPSEEK_API_KEY",
-            "mistral": "MISTRAL_API_KEY",
-        }
-
-        keys_by_provider: dict[str, list[str]] = {}
+        keys_by_env: dict[str, list[str]] = {}
 
         for pair in self.api_keys.split(","):
             pair = pair.strip()
             if ":" not in pair:
                 continue
 
-            provider, key = pair.split(":", 1)
-            provider = provider.strip().lower()
+            env_var, key = pair.split(":", 1)
+            env_var = env_var.strip()
             key = key.strip()
 
             if not key:
                 continue
 
-            keys_by_provider.setdefault(provider, []).append(key)
+            keys_by_env.setdefault(env_var, []).append(key)
 
-        # Set first key of each provider as env var (LiteLLM reads from env)
-        for provider, keys in keys_by_provider.items():
-            if provider in env_map and keys:
-                os.environ[env_map[provider]] = keys[0]
+        # Set first key of each env var (LiteLLM reads from env)
+        for env_var, keys in keys_by_env.items():
+            if keys:
+                os.environ[env_var] = keys[0]
 
-        return keys_by_provider
+        return keys_by_env
 
     def parse_database_url(self) -> dict:
         """Parse DATABASE_URL into connection parameters."""

@@ -35,7 +35,7 @@
       "args": ["better-mem0-mcp@latest"],
       "env": {
         "DATABASE_URL": "postgresql://user:pass@xxx.neon.tech/neondb?sslmode=require",
-        "API_KEYS": "gemini:AIza..."
+        "API_KEYS": "GOOGLE_API_KEY:AIza..."
       }
     }
   }
@@ -52,7 +52,7 @@
       "args": ["run", "-i", "--rm", "-e", "DATABASE_URL", "-e", "API_KEYS", "n24q02m/better-mem0-mcp:latest"],
       "env": {
         "DATABASE_URL": "postgresql://...",
-        "API_KEYS": "gemini:AIza..."
+        "API_KEYS": "GOOGLE_API_KEY:AIza..."
       }
     }
   }
@@ -70,24 +70,23 @@ Ask your AI: "Remember that I prefer dark mode and use FastAPI"
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `DATABASE_URL` | Yes | PostgreSQL with pgvector extension |
-| `API_KEYS` | Yes | `provider:key` pairs, comma-separated |
+| `API_KEYS` | Yes | `ENV_VAR:key` pairs, comma-separated |
 | `LLM_MODELS` | No | Model fallback chain |
 | `EMBEDDER_MODELS` | No | Embedding model chain |
 
-### Supported Providers
+### Supported LiteLLM Providers
 
-`gemini`, `openai`, `anthropic`, `groq`, `deepseek`, `mistral`
-
-### Examples
+Use environment variable names from [LiteLLM docs](https://docs.litellm.ai/):
+`GOOGLE_API_KEY`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GROQ_API_KEY`, etc.
 
 **Single provider:**
 ```bash
-API_KEYS=gemini:AIza...
+API_KEYS=GOOGLE_API_KEY:AIza...
 ```
 
 **Multi-key with fallback:**
 ```bash
-API_KEYS=gemini:AIza-1,gemini:AIza-2,openai:sk-xxx
+API_KEYS=GOOGLE_API_KEY:AIza-1,GOOGLE_API_KEY:AIza-2,OPENAI_API_KEY:sk-xxx
 LLM_MODELS=gemini/gemini-3-flash-preview,openai/gpt-4o-mini
 EMBEDDER_MODELS=gemini/gemini-embedding-001,openai/text-embedding-3-small
 ```
