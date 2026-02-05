@@ -1,3 +1,10 @@
+# [1.1.0-beta.23](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.22...v1.1.0-beta.23) (2026-02-05)
+
+
+### Bug Fixes
+
+* Use GITHUB_TOKEN instead of GH_PAT for GitHub Container Registry authentication and CI/CD status checks. ([2287b07](https://github.com/n24q02m/better-mem0-mcp/commit/2287b072b1ea9f96fb466abb6497d45363b5052d))
+
 # [1.1.0-beta.22](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.21...v1.1.0-beta.22) (2026-02-05)
 
 
