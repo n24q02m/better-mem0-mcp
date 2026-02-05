@@ -7,6 +7,7 @@ Tiered Description Pattern:
 - Tier 3: MCP Resources for supported clients
 """
 
+import asyncio
 from pathlib import Path
 
 from loguru import logger
@@ -171,7 +172,7 @@ async def help(tool_name: str = "memory") -> str:
     Get full documentation for a tool.
     Use when compressed descriptions are insufficient.
     """
-    return _load_doc(tool_name)
+    return await asyncio.to_thread(_load_doc, tool_name)
 
 
 def main():
