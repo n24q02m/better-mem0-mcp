@@ -5,6 +5,18 @@
 		},
 		{
 			"path": "../../EchoVault"
+		},
+		{
+			"path": "../../wet-mcp"
+		},
+		{
+			"path": "../../better-notion-mcp"
+		},
+		{
+			"path": "../../KnowledgePrism"
+		},
+		{
+			"path": "../../QuikShipping"
 		}
 	],
 	"settings": {}
