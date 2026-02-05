@@ -113,7 +113,9 @@ async def memory(
                 # Vector search - returns {"results": [...]} (same as get_all)
                 response = _memory.search(query, user_id=user_id, limit=limit)
                 memories = (
-                    response.get("results", []) if isinstance(response, dict) else response
+                    response.get("results", [])
+                    if isinstance(response, dict)
+                    else response
                 )
 
                 # Add graph context
