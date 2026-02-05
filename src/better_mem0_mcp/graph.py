@@ -45,7 +45,9 @@ class SQLGraphStore:
         if "sslmode" in conn_params:
             self.conn_params["sslmode"] = conn_params["sslmode"]
 
-        self.pool = ConnectionPool(kwargs=self.conn_params, min_size=1, max_size=10, open=True)
+        self.pool = ConnectionPool(
+            kwargs=self.conn_params, min_size=1, max_size=10, open=True
+        )
         self._init_tables()
 
     def _get_connection(self):

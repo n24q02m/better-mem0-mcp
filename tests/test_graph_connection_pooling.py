@@ -7,8 +7,9 @@ sys.path.append("src")
 
 from better_mem0_mcp.graph import SQLGraphStore
 
+
 class TestSQLGraphStoreOptimization(unittest.TestCase):
-    @patch('better_mem0_mcp.graph.ConnectionPool')
+    @patch("better_mem0_mcp.graph.ConnectionPool")
     def test_connection_pooling(self, MockPool):
         # Setup mock pool
         mock_pool_instance = MagicMock()
@@ -42,7 +43,10 @@ class TestSQLGraphStoreOptimization(unittest.TestCase):
         # Total 6 calls to pool.connection()
 
         self.assertEqual(mock_pool_instance.connection.call_count, 6)
-        print(f"ConnectionPool.connection() called {mock_pool_instance.connection.call_count} times")
+        print(
+            f"ConnectionPool.connection() called {mock_pool_instance.connection.call_count} times"
+        )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
