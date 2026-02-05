@@ -1,3 +1,10 @@
+# [1.1.0-beta.22](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.21...v1.1.0-beta.22) (2026-02-05)
+
+
+### Bug Fixes
+
+* Pin Python version to 3.13 and remove Python 3.14 compatibility from the dependency lock file. ([ec134ef](https://github.com/n24q02m/better-mem0-mcp/commit/ec134ef10ab6de3eaf800d51a441fe2b44f2d4dc))
+
 # [1.1.0-beta.21](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.20...v1.1.0-beta.21) (2026-01-12)
 
 
