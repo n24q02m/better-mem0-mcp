@@ -4,14 +4,20 @@ import sys
 import os
 
 # Add src to sys.path so we can import better_mem0_mcp
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 
 from better_mem0_mcp.graph import SQLGraphStore
 
+
 class TestGraphQueries(unittest.TestCase):
     def setUp(self):
-        self.conn_params = {"dbname": "test_db", "user": "user", "password": "password", "host": "localhost"}
-        self.patcher = patch('better_mem0_mcp.graph.psycopg.connect')
+        self.conn_params = {
+            "dbname": "test_db",
+            "user": "user",
+            "password": "password",
+            "host": "localhost",
+        }
+        self.patcher = patch("better_mem0_mcp.graph.psycopg.connect")
         self.mock_connect = self.patcher.start()
 
         # Mock the connection context manager
@@ -25,7 +31,7 @@ class TestGraphQueries(unittest.TestCase):
         # Mock some results to verify get_context processing
         self.mock_cursor.fetchall.return_value = [
             ("Label1", "Name1", "Rel1"),
-            ("Label2", "Name2", "Rel2")
+            ("Label2", "Name2", "Rel2"),
         ]
 
     def tearDown(self):
@@ -50,14 +56,14 @@ class TestGraphQueries(unittest.TestCase):
         self.assertEqual(self.mock_cursor.execute.call_count, expected_calls)
 
         # Check if the query contained ANY
-        call_args = self.mock_cursor.execute.call_args_list[1] # 0 is init, 1 is query
+        call_args = self.mock_cursor.execute.call_args_list[1]  # 0 is init, 1 is query
         sql_query = call_args[0][0]
         params = call_args[0][1]
 
         self.assertIn("ILIKE ANY(%s)", sql_query)
-        self.assertIn("user1", params) # user_id
-        self.assertIsInstance(params[0], list) # the patterns
-        self.assertEqual(len(params[0]), 5) # 5 patterns
+        self.assertIn("user1", params)  # user_id
+        self.assertIsInstance(params[0], list)  # the patterns
+        self.assertEqual(len(params[0]), 5)  # 5 patterns
 
         # Verify context output contains the mocked results
         self.assertIn("Name1", context)
@@ -81,5 +87,6 @@ class TestGraphQueries(unittest.TestCase):
         self.assertEqual(len(params[0]), 1)
         self.assertEqual(params[0][0], "%single_word%")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

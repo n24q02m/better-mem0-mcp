@@ -119,7 +119,9 @@ class SQLGraphStore:
             logger.error(f"Failed to add edge: {e}")
             return False
 
-    def find_related(self, names: str | list[str], user_id: str, limit: int = 10) -> list[dict]:
+    def find_related(
+        self, names: str | list[str], user_id: str, limit: int = 10
+    ) -> list[dict]:
         """Find nodes related to a name or list of names."""
         if isinstance(names, str):
             names = [names]
