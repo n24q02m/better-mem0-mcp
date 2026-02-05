@@ -119,10 +119,16 @@ class SQLGraphStore:
             logger.error(f"Failed to add edge: {e}")
             return False
 
-    def find_related(self, name: str, user_id: str, limit: int = 10) -> list[dict]:
-        """Find nodes related to a name."""
+    def find_related(
+        self, names: str | list[str], user_id: str, limit: int = 10
+    ) -> list[dict]:
+        """Find nodes related to a name or list of names."""
+        if isinstance(names, str):
+            names = [names]
+
         try:
             with self._get_connection() as conn:
+                patterns = [f"%{name}%" for name in names]
                 results = conn.execute(
                     """
                     SELECT DISTINCT n2.label, n2.name, e.relationship
@@ -130,10 +136,10 @@ class SQLGraphStore:
                     JOIN graph_edges e ON n1.id = e.from_node_id OR n1.id = e.to_node_id
                     JOIN graph_nodes n2 ON (e.to_node_id = n2.id OR e.from_node_id = n2.id)
                         AND n2.id != n1.id
-                    WHERE n1.name ILIKE %s AND n1.user_id = %s
+                    WHERE n1.name ILIKE ANY(%s) AND n1.user_id = %s
                     LIMIT %s
                     """,
-                    (f"%{name}%", user_id, limit),
+                    (patterns, user_id, limit),
                 ).fetchall()
 
                 return [
@@ -146,10 +152,15 @@ class SQLGraphStore:
     def get_context(self, query: str, user_id: str) -> str:
         """Get graph context for a query (find related entities)."""
         words = [w for w in query.split() if len(w) > 3]
-        related: list[dict] = []
 
-        for word in words[:5]:  # Limit to first 5 significant words
-            related.extend(self.find_related(word, user_id, limit=3))
+        # Limit to first 5 significant words
+        target_words = words[:5]
+        if not target_words:
+            return ""
+
+        # Fetch related nodes for all words in a single query
+        # Limit results to 15 (3 per word approx) to match original behavior's scale
+        related = self.find_related(target_words, user_id, limit=15)
 
         if not related:
             return ""
