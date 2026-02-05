@@ -1,3 +1,10 @@
+# [1.1.0-beta.24](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.23...v1.1.0-beta.24) (2026-02-05)
+
+
+### Bug Fixes
+
+* **cd:** checkout main branch for PR merge release ([77b08ad](https://github.com/n24q02m/better-mem0-mcp/commit/77b08ad425d07caf35d31730e792f54a3b961d9c))
+
 # [1.1.0-beta.23](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.22...v1.1.0-beta.23) (2026-02-05)
 
 
