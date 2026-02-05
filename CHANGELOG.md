@@ -1,3 +1,10 @@
+# [1.1.0-beta.25](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.24...v1.1.0-beta.25) (2026-02-05)
+
+
+### Bug Fixes
+
+* **cd:** use dry-run check to prevent workflow failure when no release needed ([6cf51cd](https://github.com/n24q02m/better-mem0-mcp/commit/6cf51cd7cfb8475a834f3547625d1ca328997d44))
+
 # [1.1.0-beta.24](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0-beta.23...v1.1.0-beta.24) (2026-02-05)
 
 
