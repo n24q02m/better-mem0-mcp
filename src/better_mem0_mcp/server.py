@@ -7,6 +7,7 @@ Tiered Description Pattern:
 - Tier 3: MCP Resources for supported clients
 """
 
+import asyncio
 from pathlib import Path
 
 from loguru import logger
@@ -117,7 +118,9 @@ async def memory(
             # Add graph context
             graph_context = ""
             if _graph:
-                graph_context = _graph.get_context(query, user_id)
+                graph_context = await asyncio.to_thread(
+                    _graph.get_context, query, user_id
+                )
 
             if not memories and not graph_context:
                 return "No memories found."
