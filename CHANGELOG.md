@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.1-beta](https://github.com/n24q02m/better-mem0-mcp/compare/v1.2.0...v1.2.1-beta) (2026-02-06)
+
+
+### Bug Fixes
+
+* add .gitattributes for consistent line endings ([0553b67](https://github.com/n24q02m/better-mem0-mcp/commit/0553b67aa2c65ae0266601b0794c5b92b2cc3fe0))
+* add prerelease versioning strategy to beta config ([73e6d81](https://github.com/n24q02m/better-mem0-mcp/commit/73e6d81e243eccbcfbfb8f44a7194c3a11719874))
+
 ## [1.2.0](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.0...v1.2.0) (2026-02-06)
 
 
