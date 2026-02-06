@@ -1,5 +1,6 @@
 """SQL-based Graph Storage - works with any PostgreSQL, no extensions needed."""
 
+import contextlib
 from typing import Any
 
 import psycopg
@@ -119,11 +120,16 @@ class SQLGraphStore:
             logger.error(f"Failed to add edge: {e}")
             return False
 
-    def find_related(self, name: str, user_id: str, limit: int = 10) -> list[dict]:
+    def find_related(
+        self, name: str, user_id: str, limit: int = 10, conn: Any = None
+    ) -> list[dict]:
         """Find nodes related to a name."""
         try:
-            with self._get_connection() as conn:
-                results = conn.execute(
+            # Use provided connection or create a new one
+            ctx = self._get_connection() if conn is None else contextlib.nullcontext(conn)
+
+            with ctx as connection:
+                results = connection.execute(
                     """
                     SELECT DISTINCT n2.label, n2.name, e.relationship
                     FROM graph_nodes n1
@@ -148,8 +154,17 @@ class SQLGraphStore:
         words = [w for w in query.split() if len(w) > 3]
         related: list[dict] = []
 
-        for word in words[:5]:  # Limit to first 5 significant words
-            related.extend(self.find_related(word, user_id, limit=3))
+        if not words:
+            return ""
+
+        try:
+            # Reuse a single connection for all lookups
+            with self._get_connection() as conn:
+                for word in words[:5]:  # Limit to first 5 significant words
+                    related.extend(self.find_related(word, user_id, limit=3, conn=conn))
+        except Exception as e:
+            logger.error(f"Failed to get context: {e}")
+            return ""
 
         if not related:
             return ""
