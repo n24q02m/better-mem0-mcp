@@ -2,16 +2,18 @@ import pytest
 from unittest.mock import MagicMock, patch
 import better_mem0_mcp.server as server
 
+
 @pytest.mark.asyncio
 async def test_memory_add_logs_masked_content():
-    # Mock global variables to bypass _init logic
-    server._settings = MagicMock()
-    server._memory = MagicMock()
-    server._memory.add.return_value = "mock_result"
-    server._graph = MagicMock()
+    # Patch the global variables in the server module
+    with (
+        patch("better_mem0_mcp.server._settings", new_callable=MagicMock),
+        patch("better_mem0_mcp.server._memory", new_callable=MagicMock) as mock_memory,
+        patch("better_mem0_mcp.server._graph", new_callable=MagicMock),
+        patch("better_mem0_mcp.server.logger") as mock_logger,
+    ):
+        mock_memory.add.return_value = "mock_result"
 
-    # Mock logger
-    with patch("better_mem0_mcp.server.logger") as mock_logger:
         content = "sensitive_password_content_that_should_not_be_logged"
         user_id = "test_user"
 
@@ -30,9 +32,13 @@ async def test_memory_add_logs_masked_content():
             assert content[:50] not in log_message
 
         # Verify the masked message was logged
-        expected_log = f"Added memory for {user_id}: [CONTENT MASKED] (length: {len(content)})"
+        expected_log = (
+            f"Added memory for {user_id}: [CONTENT MASKED] (length: {len(content)})"
+        )
         mock_logger.info.assert_called_with(expected_log)
+
 
 if __name__ == "__main__":
     import asyncio
+
     asyncio.run(test_memory_add_logs_masked_content())
