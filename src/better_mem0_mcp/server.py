@@ -22,8 +22,6 @@ _memory = None
 _graph = None
 _settings = None
 
-DEFAULT_USER = "default"
-
 
 def _init():
     """Lazy initialization of memory and graph stores."""
@@ -93,7 +91,13 @@ async def memory(
     """
     _init()
 
-    user_id = user_id or DEFAULT_USER
+    # Security check: authorization for user_id
+    configured_default = _settings.default_user
+    if user_id:
+        if user_id != configured_default and not _settings.allow_user_id_override:
+            return f"Error: Access denied for user_id '{user_id}'. Server is in restricted mode."
+    else:
+        user_id = configured_default
 
     try:
         if action == "add":

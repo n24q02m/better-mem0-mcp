@@ -32,6 +32,10 @@ class Settings(BaseSettings):
     llm_models: str = "gemini/gemini-3-flash-preview"
     embedder_models: str = "gemini/gemini-embedding-001"
 
+    # Security: User Management
+    default_user: str = "default"
+    allow_user_id_override: bool = False
+
     def setup_api_keys(self) -> dict[str, list[str]]:
         """Parse API_KEYS (format: ENV_VAR:key,...) and set env vars.
 
