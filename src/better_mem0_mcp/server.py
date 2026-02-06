@@ -101,7 +101,7 @@ async def memory(
                 return "Error: 'content' required for add action"
 
             result = _memory.add(content, user_id=user_id)
-            logger.info(f"Added memory for {user_id}: {content[:50]}...")
+            logger.info(f"Added memory for {user_id}: [CONTENT MASKED] (length: {len(content)})")
             return f"Saved: {result}"
 
         elif action == "search":
