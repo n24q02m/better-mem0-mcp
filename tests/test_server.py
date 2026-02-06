@@ -2,6 +2,7 @@ import pytest
 from pathlib import Path
 from better_mem0_mcp.server import _load_doc
 
+
 def test_load_doc_valid():
     """Test loading a valid document."""
     # Ensure memory.md exists for this test to pass
@@ -15,10 +16,12 @@ def test_load_doc_valid():
     assert "Documentation not found" not in content
     assert "Access denied" not in content
 
+
 def test_load_doc_not_found():
     """Test loading a non-existent document."""
     content = _load_doc("nonexistent_doc")
     assert "Documentation not found" in content
+
 
 def test_load_doc_path_traversal():
     """Test path traversal attempt."""
