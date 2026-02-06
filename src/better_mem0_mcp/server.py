@@ -8,6 +8,7 @@ Tiered Description Pattern:
 """
 
 from pathlib import Path
+from functools import lru_cache
 
 from loguru import logger
 from mcp.server.fastmcp import FastMCP
@@ -61,6 +62,7 @@ def _init():
         logger.warning(f"Graph Memory disabled: {e}")
 
 
+@lru_cache
 def _load_doc(name: str) -> str:
     """Load documentation file from docs/ directory."""
     docs_dir = Path(__file__).parent / "docs"
