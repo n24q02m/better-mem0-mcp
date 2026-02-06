@@ -126,7 +126,9 @@ class SQLGraphStore:
         """Find nodes related to a name."""
         try:
             # Use provided connection or create a new one
-            ctx = self._get_connection() if conn is None else contextlib.nullcontext(conn)
+            ctx = (
+                self._get_connection() if conn is None else contextlib.nullcontext(conn)
+            )
 
             with ctx as connection:
                 results = connection.execute(
