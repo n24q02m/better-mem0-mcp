@@ -98,7 +98,7 @@ wheels = [
 
 [[package]]
 name = "better-mem0-mcp"
-version = "1.1.0b21"
+version = "1.1.0b25"
 source = { editable = "." }
 dependencies = [
     { name = "google-genai" },
@@ -121,22 +121,22 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "google-genai", specifier = ">=1.0.0" },
-    { name = "litellm", specifier = ">=1.0.0" },
-    { name = "loguru", specifier = ">=0.7.0" },
-    { name = "mcp", extras = ["cli"], specifier = ">=1.0.0" },
-    { name = "mem0ai", specifier = ">=0.1.0" },
-    { name = "psycopg", extras = ["binary", "pool"], specifier = ">=3.1.0" },
-    { name = "pydantic-settings", specifier = ">=2.0.0" },
+    { name = "google-genai" },
+    { name = "litellm" },
+    { name = "loguru" },
+    { name = "mcp", extras = ["cli"] },
+    { name = "mem0ai" },
+    { name = "psycopg", extras = ["binary", "pool"] },
+    { name = "pydantic-settings" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "pre-commit", specifier = ">=4.0.0" },
-    { name = "pytest", specifier = ">=8.0.0" },
-    { name = "pytest-asyncio", specifier = ">=0.25.0" },
-    { name = "ruff", specifier = ">=0.8.0" },
-    { name = "ty", specifier = ">=0.0.1a10" },
+    { name = "pre-commit" },
+    { name = "pytest" },
+    { name = "pytest-asyncio" },
+    { name = "ruff" },
+    { name = "ty" },
 ]
 
 [[package]]

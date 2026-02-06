@@ -18,14 +18,14 @@ UV_LINK_MODE = "copy"
 description = "Setup development environment"
 run = [
   "mise install",
-  "uv sync --group dev",
   "node scripts/clean-venv.mjs",
+  "uv sync --group dev",
   "uv pip install pre-commit",
   "uv run pre-commit install",
   "echo 'Setup complete!'"
 ]
 
-[tasks.check]
+[tasks.lint]
 description = "Run all quality checks (ruff + ty)"
 run = [
   "uv run ruff check .",

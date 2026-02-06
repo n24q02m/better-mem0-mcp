@@ -19,28 +19,28 @@ classifiers = [
 requires-python = "==3.13.*"
 dependencies = [
     # MCP Server
-    "mcp[cli]>=1.0.0",
+    "mcp[cli]",
     # Mem0 Core
-    "mem0ai>=0.1.0",
+    "mem0ai",
     # Config
-    "pydantic-settings>=2.0.0",
+    "pydantic-settings",
     # Database
-    "psycopg[binary,pool]>=3.1.0",
+    "psycopg[binary,pool]",
     # Logging
-    "loguru>=0.7.0",
+    "loguru",
     # Gemini (for embeddings)
-    "google-genai>=1.0.0",
+    "google-genai",
     # LLM (for Mem0)
-    "litellm>=1.0.0",
+    "litellm",
 ]
 
 [dependency-groups]
 dev = [
-    "pytest>=8.0.0",
-    "pytest-asyncio>=0.25.0",
-    "ruff>=0.8.0",
-    "ty>=0.0.1a10",
-    "pre-commit>=4.0.0",
+    "pytest",
+    "pytest-asyncio",
+    "ruff",
+    "ty",
+    "pre-commit",
 ]
 
 [project.scripts]
