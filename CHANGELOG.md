@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1-beta.2](https://github.com/n24q02m/better-mem0-mcp/compare/v1.2.1-beta.1...v1.2.1-beta.2) (2026-02-08)
+
+
+### Documentation
+
+* update README and project description to reflect deprecation and transition to EchoVault ([3adbfaa](https://github.com/n24q02m/better-mem0-mcp/commit/3adbfaa655a290a14605da0932fc33ef8461b553))
+
 ## [1.2.1-beta.1](https://github.com/n24q02m/better-mem0-mcp/compare/v1.2.1-beta...v1.2.1-beta.1) (2026-02-08)
 
 
