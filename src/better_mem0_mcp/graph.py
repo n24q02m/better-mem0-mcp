@@ -2,7 +2,7 @@
 
 from typing import Any
 
-import psycopg
+from psycopg_pool import ConnectionPool
 from loguru import logger
 
 
@@ -46,18 +46,24 @@ class SQLGraphStore:
         # Add sslmode if present
         if "sslmode" in conn_params:
             self.conn_params["sslmode"] = conn_params["sslmode"]
+
+        # Initialize connection pool
+        self.pool = ConnectionPool(min_size=1, max_size=10, kwargs=self.conn_params)
         self._init_tables()
 
     def _get_connection(self):
-        """Get a new database connection."""
-        return psycopg.connect(**self.conn_params)
+        """Get a connection from the pool."""
+        return self.pool.connection()
+
+    def close(self):
+        """Close the connection pool."""
+        self.pool.close()
 
     def _init_tables(self):
         """Initialize graph tables if not exist."""
         try:
             with self._get_connection() as conn:
                 conn.execute(self.INIT_SQL)
-                conn.commit()
             logger.info("Graph tables initialized")
         except Exception as e:
             logger.warning(f"Graph init failed (may already exist): {e}")
@@ -89,7 +95,6 @@ class SQLGraphStore:
                        VALUES (%s, %s, %s, %s) RETURNING id""",
                     (label, name, Json(properties or {}), user_id),
                 ).fetchone()
-                conn.commit()
                 return str(result[0]) if result else None
         except Exception as e:
             logger.error(f"Failed to add node: {e}")
@@ -113,7 +118,6 @@ class SQLGraphStore:
                        ON CONFLICT DO NOTHING""",
                     (from_id, to_id, relationship, Json(properties or {})),
                 )
-                conn.commit()
                 return True
         except Exception as e:
             logger.error(f"Failed to add edge: {e}")
