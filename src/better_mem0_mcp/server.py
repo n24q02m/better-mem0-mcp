@@ -63,8 +63,12 @@ def _init():
 
 def _load_doc(name: str) -> str:
     """Load documentation file from docs/ directory."""
-    docs_dir = Path(__file__).parent / "docs"
-    doc_file = docs_dir / f"{name}.md"
+    docs_dir = (Path(__file__).parent / "docs").resolve()
+    doc_file = (docs_dir / f"{name}.md").resolve()
+
+    if not doc_file.is_relative_to(docs_dir):
+        return f"Access denied: {name}"
+
     if doc_file.exists():
         return doc_file.read_text()
     return f"Documentation not found: {name}"
