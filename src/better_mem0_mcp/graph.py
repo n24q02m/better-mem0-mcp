@@ -1,8 +1,6 @@
-"""SQL-based Graph Storage - works with any PostgreSQL, no extensions needed."""
-
 from typing import Any
 
-import psycopg
+from psycopg_pool import ConnectionPool
 from loguru import logger
 
 
@@ -46,11 +44,15 @@ class SQLGraphStore:
         # Add sslmode if present
         if "sslmode" in conn_params:
             self.conn_params["sslmode"] = conn_params["sslmode"]
+
+        self.pool = ConnectionPool(
+            kwargs=self.conn_params, min_size=1, max_size=10, open=True
+        )
         self._init_tables()
 
     def _get_connection(self):
-        """Get a new database connection."""
-        return psycopg.connect(**self.conn_params)
+        """Get a database connection from the pool."""
+        return self.pool.connection()
 
     def _init_tables(self):
         """Initialize graph tables if not exist."""
