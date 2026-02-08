@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/n24q02m/better-mem0-mcp/compare/v1.1.6...v1.2.0) (2026-02-08)
+
+
+### Features
+
+* promote dev to main (v1.2.1-beta.2) ([#23](https://github.com/n24q02m/better-mem0-mcp/issues/23)) ([a8061e8](https://github.com/n24q02m/better-mem0-mcp/commit/a8061e850649b915dfc7446a8622fd455d384d95))
+
 ## [1.2.1-beta.2](https://github.com/n24q02m/better-mem0-mcp/compare/v1.2.1-beta.1...v1.2.1-beta.2) (2026-02-08)
 
 
