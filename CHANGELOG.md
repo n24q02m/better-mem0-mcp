@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1-beta.1](https://github.com/n24q02m/better-mem0-mcp/compare/v1.2.1-beta...v1.2.1-beta.1) (2026-02-08)
+
+
+### Bug Fixes
+
+* update setup-uv action to v6 and add pytest hook to pre-commit config ([20efeeb](https://github.com/n24q02m/better-mem0-mcp/commit/20efeeb912cf751861c74f1b49f70ba57a12d93c))
+
 ## [1.2.1-beta](https://github.com/n24q02m/better-mem0-mcp/compare/v1.2.0...v1.2.1-beta) (2026-02-06)
 
 
