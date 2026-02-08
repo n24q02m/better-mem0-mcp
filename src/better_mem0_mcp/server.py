@@ -7,6 +7,7 @@ Tiered Description Pattern:
 - Tier 3: MCP Resources for supported clients
 """
 
+import asyncio
 from pathlib import Path
 
 from loguru import logger
@@ -108,16 +109,23 @@ async def memory(
             if not query:
                 return "Error: 'query' required for search action"
 
-            # Vector search - returns {"results": [...]} (same as get_all)
-            response = _memory.search(query, user_id=user_id, limit=limit)
-            memories = (
-                response.get("results", []) if isinstance(response, dict) else response
-            )
+            def _search_thread():
+                # Vector search - returns {"results": [...]} (same as get_all)
+                response = _memory.search(query, user_id=user_id, limit=limit)
+                memories = (
+                    response.get("results", [])
+                    if isinstance(response, dict)
+                    else response
+                )
 
-            # Add graph context
-            graph_context = ""
-            if _graph:
-                graph_context = _graph.get_context(query, user_id)
+                # Add graph context
+                graph_context = ""
+                if _graph:
+                    graph_context = _graph.get_context(query, user_id)
+
+                return memories, graph_context
+
+            memories, graph_context = await asyncio.to_thread(_search_thread)
 
             if not memories and not graph_context:
                 return "No memories found."
