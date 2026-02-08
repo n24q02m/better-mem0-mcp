@@ -7,6 +7,7 @@ Tiered Description Pattern:
 - Tier 3: MCP Resources for supported clients
 """
 
+import asyncio
 from pathlib import Path
 
 from loguru import logger
@@ -100,7 +101,7 @@ async def memory(
             if not content:
                 return "Error: 'content' required for add action"
 
-            result = _memory.add(content, user_id=user_id)
+            result = await asyncio.to_thread(_memory.add, content, user_id=user_id)
             logger.info(f"Added memory for {user_id}: {content[:50]}...")
             return f"Saved: {result}"
 
@@ -109,7 +110,9 @@ async def memory(
                 return "Error: 'query' required for search action"
 
             # Vector search - returns {"results": [...]} (same as get_all)
-            response = _memory.search(query, user_id=user_id, limit=limit)
+            response = await asyncio.to_thread(
+                _memory.search, query, user_id=user_id, limit=limit
+            )
             memories = (
                 response.get("results", []) if isinstance(response, dict) else response
             )
@@ -117,7 +120,9 @@ async def memory(
             # Add graph context
             graph_context = ""
             if _graph:
-                graph_context = _graph.get_context(query, user_id)
+                graph_context = await asyncio.to_thread(
+                    _graph.get_context, query, user_id
+                )
 
             if not memories and not graph_context:
                 return "No memories found."
@@ -134,7 +139,7 @@ async def memory(
 
         elif action == "list":
             # get_all returns {"results": [...]} or list directly
-            response = _memory.get_all(user_id=user_id)
+            response = await asyncio.to_thread(_memory.get_all, user_id=user_id)
             memories = (
                 response.get("results", []) if isinstance(response, dict) else response
             )
@@ -149,7 +154,7 @@ async def memory(
             if not memory_id:
                 return "Error: 'memory_id' required for delete action"
 
-            _memory.delete(memory_id)
+            await asyncio.to_thread(_memory.delete, memory_id)
             logger.info(f"Deleted memory: {memory_id}")
             return f"Deleted: {memory_id}"
 
