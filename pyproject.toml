@@ -1,13 +1,13 @@
 [project]
 name = "better-mem0-mcp"
-version = "1.2.1-beta.1"
-description = "Zero-setup MCP Server for AI memory - works with Neon/Supabase"
+version = "1.2.1-beta"
+description = "[DEPRECATED - use EchoVault] MCP Server for AI memory with PostgreSQL"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [{ name = "n24q02m", email = "quangminh2422004@gmail.com" }]
-keywords = ["mcp", "mem0", "memory", "ai-agent", "pgvector", "llm"]
+keywords = ["mcp", "mem0", "memory", "ai-agent", "pgvector", "llm", "deprecated"]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 7 - Inactive",
     "Environment :: Console",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",

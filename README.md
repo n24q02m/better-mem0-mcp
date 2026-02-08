@@ -1,10 +1,61 @@
 # better-mem0-mcp
 
+> [!CAUTION]
+> **DỰ ÁN ĐÃ NGỪNG PHÁT TRIỂN** — Xem phần [Chuyển sang EchoVault](#chuyển-sang-echovault) bên dưới.
+
 **Self-hosted MCP Server for AI memory with PostgreSQL (pgvector).**
 
 [![PyPI](https://img.shields.io/pypi/v/better-mem0-mcp)](https://pypi.org/project/better-mem0-mcp/)
 [![Docker](https://img.shields.io/docker/v/n24q02m/better-mem0-mcp?label=docker)](https://hub.docker.com/r/n24q02m/better-mem0-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+---
+
+## Thông báo ngừng phát triển
+
+Dự án `better-mem0-mcp` đã **ngừng phát triển** kể từ tháng 02/2026.
+
+Giải pháp thay thế đã được tích hợp trực tiếp vào [EchoVault](https://github.com/n24q02m/EchoVault) — black box cho toàn bộ lịch sử hội thoại AI của bạn. EchoVault không chỉ trích xuất và lưu trữ raw chat data mà còn:
+
+- **Parse và embed nội dung** từ 12+ AI coding tools (VS Code Copilot, Cursor, Cline, Claude Code, Gemini CLI, Aider...)
+- **Tìm kiếm ngữ nghĩa + từ khóa** — hybrid search kết hợp vector similarity (cosine) và FTS5 keyword search qua RRF fusion
+- **Giao diện desktop app** (Tauri) để quản lý, tìm kiếm trực quan với system tray, auto-sync, auto-update
+- **MCP Server tích hợp** (`echovault-cli mcp`) — AI agents truy vấn vault qua tool `vault` với các action: `list`, `search`, `read`, `semantic_search`
+
+So với `better-mem0-mcp`, EchoVault có kiến trúc tốt hơn:
+- **Không phụ thuộc dịch vụ bên ngoài** — không cần Mem0, LiteLLM, hay PostgreSQL cloud (Neon/Supabase). Mọi thứ chạy local với SQLite + Ollama
+- **Nguồn dữ liệu phong phú** — tự động trích xuất từ 12+ IDE/CLI tools thay vì phải thêm thủ công
+- **Trải nghiệm thống nhất** — cùng một vault, dùng được trên cả desktop app, CLI, và MCP server
+
+### Chuyển sang EchoVault
+
+1. **Cài đặt**: Tải từ [GitHub Releases](https://github.com/n24q02m/EchoVault/releases) hoặc chạy script:
+   ```powershell
+   # Windows - Desktop App + CLI
+   irm https://raw.githubusercontent.com/n24q02m/EchoVault/main/install.ps1 | iex
+
+   # Chỉ CLI/MCP (headless)
+   irm https://raw.githubusercontent.com/n24q02m/EchoVault/main/install-cli.ps1 | iex
+   ```
+2. **Trích xuất và index**: `echovault-cli extract && echovault-cli parse && echovault-cli embed`
+3. **Cập nhật MCP config**:
+   ```json
+   {
+     "mcpServers": {
+       "echovault": {
+         "command": "echovault-cli",
+         "args": ["mcp"]
+       }
+     }
+   }
+   ```
+
+---
+
+## Tài liệu cũ
+
+> [!NOTE]
+> Nội dung bên dưới được giữ lại để tham khảo. Phiên bản cuối cùng trên PyPI/Docker vẫn hoạt động nhưng sẽ **không nhận bản cập nhật mới**.
 
 ## Features
 
@@ -16,7 +67,8 @@
 
 ---
 
-## Quick Start
+<details>
+<summary><strong>Quick Start (Legacy)</strong></summary>
 
 ### 1. Get Prerequisites
 
@@ -63,9 +115,10 @@
 
 Ask your AI: "Remember that I prefer dark mode and use FastAPI"
 
----
+</details>
 
-## Configuration
+<details>
+<summary><strong>Configuration (Legacy)</strong></summary>
 
 | Variable | Required | Description |
 |----------|----------|-------------|
@@ -98,9 +151,10 @@ EMBEDDER_MODELS=gemini/gemini-embedding-001,openai/text-embedding-3-small
 | `LLM_MODELS` | `gemini/gemini-3-flash-preview` |
 | `EMBEDDER_MODELS` | `gemini/gemini-embedding-001` |
 
----
+</details>
 
-## Tools
+<details>
+<summary><strong>Tools (Legacy)</strong></summary>
 
 | Tool | Description |
 |------|-------------|
@@ -116,9 +170,10 @@ EMBEDDER_MODELS=gemini/gemini-embedding-001,openai/text-embedding-3-small
 {"action": "delete", "memory_id": "abc123"}
 ```
 
----
+</details>
 
-## Build from Source
+<details>
+<summary><strong>Build from Source (Legacy)</strong></summary>
 
 ```bash
 git clone https://github.com/n24q02m/better-mem0-mcp
@@ -133,11 +188,9 @@ uv run better-mem0-mcp
 
 **Requirements:** Python 3.13+
 
+</details>
+
 ---
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## License
 
