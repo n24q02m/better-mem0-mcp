@@ -1,7 +1,7 @@
 # better-mem0-mcp
 
 > [!CAUTION]
-> **DỰ ÁN ĐÃ NGỪNG PHÁT TRIỂN** — Xem phần [Chuyển sang EchoVault](#chuyển-sang-echovault) bên dưới.
+> **PROJECT DISCONTINUED** — See [Migration to EchoVault](#migration-to-echovault) below.
 
 **Self-hosted MCP Server for AI memory with PostgreSQL (pgvector).**
 
@@ -11,34 +11,34 @@
 
 ---
 
-## Thông báo ngừng phát triển
+## Discontinuation Notice
 
-Dự án `better-mem0-mcp` đã **ngừng phát triển** kể từ tháng 02/2026.
+The `better-mem0-mcp` project has been **discontinued** as of February 2026.
 
-Giải pháp thay thế đã được tích hợp trực tiếp vào [EchoVault](https://github.com/n24q02m/EchoVault) — black box cho toàn bộ lịch sử hội thoại AI của bạn. EchoVault không chỉ trích xuất và lưu trữ raw chat data mà còn:
+The replacement solution has been integrated directly into [EchoVault](https://github.com/n24q02m/EchoVault) — a black box for your entire AI conversation history. EchoVault not only extracts and stores raw chat data, but also:
 
-- **Parse và embed nội dung** từ 12+ AI coding tools (VS Code Copilot, Cursor, Cline, Claude Code, Gemini CLI, Aider...)
-- **Tìm kiếm ngữ nghĩa + từ khóa** — hybrid search kết hợp vector similarity (cosine) và FTS5 keyword search qua RRF fusion
-- **Giao diện desktop app** (Tauri) để quản lý, tìm kiếm trực quan với system tray, auto-sync, auto-update
-- **MCP Server tích hợp** (`echovault-cli mcp`) — AI agents truy vấn vault qua tool `vault` với các action: `list`, `search`, `read`, `semantic_search`
+- **Parses and embeds content** from 12+ AI coding tools (VS Code Copilot, Cursor, Cline, Claude Code, Gemini CLI, Aider...)
+- **Semantic + keyword search** — hybrid search combining vector similarity (cosine) and FTS5 keyword search via RRF fusion
+- **Desktop app interface** (Tauri) for visual management and search with system tray, auto-sync, auto-update
+- **Integrated MCP Server** (`echovault-cli mcp`) — AI agents query the vault via the `vault` tool with actions: `list`, `search`, `read`, `semantic_search`
 
-So với `better-mem0-mcp`, EchoVault có kiến trúc tốt hơn:
-- **Không phụ thuộc dịch vụ bên ngoài** — không cần Mem0, LiteLLM, hay PostgreSQL cloud (Neon/Supabase). Mọi thứ chạy local với SQLite + Ollama
-- **Nguồn dữ liệu phong phú** — tự động trích xuất từ 12+ IDE/CLI tools thay vì phải thêm thủ công
-- **Trải nghiệm thống nhất** — cùng một vault, dùng được trên cả desktop app, CLI, và MCP server
+Compared to `better-mem0-mcp`, EchoVault has a better architecture:
+- **No external dependencies** — no need for Mem0, LiteLLM, or PostgreSQL cloud (Neon/Supabase). Everything runs locally with SQLite + Ollama
+- **Rich data sources** — automatically extracts from 12+ IDE/CLI tools instead of manual additions
+- **Unified experience** — same vault, usable across desktop app, CLI, and MCP server
 
-### Chuyển sang EchoVault
+### Migration to EchoVault
 
-1. **Cài đặt**: Tải từ [GitHub Releases](https://github.com/n24q02m/EchoVault/releases) hoặc chạy script:
+1. **Installation**: Download from [GitHub Releases](https://github.com/n24q02m/EchoVault/releases) or run the script:
    ```powershell
    # Windows - Desktop App + CLI
    irm https://raw.githubusercontent.com/n24q02m/EchoVault/main/install.ps1 | iex
 
-   # Chỉ CLI/MCP (headless)
+   # CLI/MCP only (headless)
    irm https://raw.githubusercontent.com/n24q02m/EchoVault/main/install-cli.ps1 | iex
    ```
-2. **Trích xuất và index**: `echovault-cli extract && echovault-cli parse && echovault-cli embed`
-3. **Cập nhật MCP config**:
+2. **Extract and index**: `echovault-cli extract && echovault-cli parse && echovault-cli embed`
+3. **Update MCP config**:
    ```json
    {
      "mcpServers": {
@@ -52,10 +52,10 @@ So với `better-mem0-mcp`, EchoVault có kiến trúc tốt hơn:
 
 ---
 
-## Tài liệu cũ
+## Legacy Documentation
 
 > [!NOTE]
-> Nội dung bên dưới được giữ lại để tham khảo. Phiên bản cuối cùng trên PyPI/Docker vẫn hoạt động nhưng sẽ **không nhận bản cập nhật mới**.
+> The content below is kept for reference. The final version on PyPI/Docker still works but will **not receive any new updates**.
 
 ## Features
 
