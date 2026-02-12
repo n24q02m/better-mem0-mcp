@@ -1,7 +1,7 @@
 # better-mem0-mcp
 
 > [!CAUTION]
-> **PROJECT DISCONTINUED** — See [Migration to EchoVault](#migration-to-echovault) below.
+> **PROJECT DISCONTINUED** — The replacement solution is being developed at [mnemo-mcp](https://github.com/n24q02m/mnemo-mcp).
 
 **Self-hosted MCP Server for AI memory with PostgreSQL (pgvector).**
 
@@ -15,40 +15,7 @@
 
 The `better-mem0-mcp` project has been **discontinued** as of February 2026.
 
-The replacement solution has been integrated directly into [EchoVault](https://github.com/n24q02m/EchoVault) — a black box for your entire AI conversation history. EchoVault not only extracts and stores raw chat data, but also:
-
-- **Parses and embeds content** from 12+ AI coding tools (VS Code Copilot, Cursor, Cline, Claude Code, Gemini CLI, Aider...)
-- **Semantic + keyword search** — hybrid search combining vector similarity (cosine) and FTS5 keyword search via RRF fusion
-- **Desktop app interface** (Tauri) for visual management and search with system tray, auto-sync, auto-update
-- **Integrated MCP Server** (`echovault-cli mcp`) — AI agents query the vault via the `vault` tool with actions: `list`, `search`, `read`, `semantic_search`
-
-Compared to `better-mem0-mcp`, EchoVault has a better architecture:
-- **No external dependencies** — no need for Mem0, LiteLLM, or PostgreSQL cloud (Neon/Supabase). Everything runs locally with SQLite + Ollama
-- **Rich data sources** — automatically extracts from 12+ IDE/CLI tools instead of manual additions
-- **Unified experience** — same vault, usable across desktop app, CLI, and MCP server
-
-### Migration to EchoVault
-
-1. **Installation**: Download from [GitHub Releases](https://github.com/n24q02m/EchoVault/releases) or run the script:
-   ```powershell
-   # Windows - Desktop App + CLI
-   irm https://raw.githubusercontent.com/n24q02m/EchoVault/main/install.ps1 | iex
-
-   # CLI/MCP only (headless)
-   irm https://raw.githubusercontent.com/n24q02m/EchoVault/main/install-cli.ps1 | iex
-   ```
-2. **Extract and index**: `echovault-cli extract && echovault-cli parse && echovault-cli embed`
-3. **Update MCP config**:
-   ```json
-   {
-     "mcpServers": {
-       "echovault": {
-         "command": "echovault-cli",
-         "args": ["mcp"]
-       }
-     }
-   }
-   ```
+The replacement solution is being developed at **[mnemo-mcp](https://github.com/n24q02m/mnemo-mcp)** — a lightweight, self-hosted MCP server for persistent AI memory.
 
 ---
 
