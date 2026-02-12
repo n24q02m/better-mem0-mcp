@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.1-beta](https://github.com/n24q02m/better-mem0-mcp/compare/v1.3.0...v1.3.1-beta) (2026-02-12)
+
+
+### Bug Fixes
+
+* **cd:** add git config identity for sync-dev step ([343411b](https://github.com/n24q02m/better-mem0-mcp/commit/343411b9c2677c9d28fc64745d53a717267e2f32))
+
+
+### Documentation
+
+* update discontinuation notice to reference mnemo-mcp ([5eb88fd](https://github.com/n24q02m/better-mem0-mcp/commit/5eb88fd10b213b0844ad4e124728a61c4a6725b3))
+
 ## [1.3.0](https://github.com/n24q02m/better-mem0-mcp/compare/v1.2.1...v1.3.0) (2026-02-08)
 
 
