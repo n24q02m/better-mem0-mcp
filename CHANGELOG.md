@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2-beta](https://github.com/n24q02m/better-mem0-mcp/compare/v1.3.1...v1.3.2-beta) (2026-02-12)
+
+
+### Bug Fixes
+
+* **cd:** auto-resolve merge conflicts in promote workflow ([395f45a](https://github.com/n24q02m/better-mem0-mcp/commit/395f45ab8aba60f6e81f5a029a4cd5d00c8cccd5))
+
 ## [1.3.1](https://github.com/n24q02m/better-mem0-mcp/compare/v1.3.0...v1.3.1) (2026-02-12)
 
 
